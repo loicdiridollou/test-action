@@ -19,6 +19,7 @@ jobs:
         run: |
           import os
           import re
+          import json
           import uuid
           from pathlib import Path
 
@@ -34,13 +35,13 @@ jobs:
           print(os.environ)
           url = "https://api.github.com/repos/loicdiridollou/test-action/releases"
           authorization =f"Bearer {os.environ['GITHUB_TOKEN']}" 
-          data = {"tag_name": os.environ['GITHUB_REF'],
+          data = json.dumps({"tag_name": os.environ['GITHUB_REF'],
                  "target_commitish":"main",
                  "name": os.environ['GITHUB_REF'].split('/')[-1],
                  "body": result,
                  "draft": False,
                  "prerelease": False,
-                 "generate_release_notes": False}
+                 "generate_release_notes": False})
           resp = requests.post(url, headers={'Authorization': authorization}, data=data)
           print(resp.status_code)
           print(resp.text)
