@@ -15,8 +15,6 @@ jobs:
       - name: Create release
         id: split
         shell: bash
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
         run: |
           curl -L \
             -X POST \
