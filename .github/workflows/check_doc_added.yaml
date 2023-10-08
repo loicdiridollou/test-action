@@ -23,4 +23,5 @@ jobs:
         shell: python
         run: |
           import os
+          print(os.environ)
           print(f"https://api.github.com/repos/loic.diridollou/test-action/compare/{os.environ['base_sha']}..{os.environ['head_sha']}")
