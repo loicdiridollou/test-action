@@ -1,11 +1,12 @@
 on:
-  push:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, edited]
 
 jobs:
-  project_card:
-    runs-on: ubuntu-20.04
+  print_title_of_pr:
+    runs-on: ubuntu-latest
     steps:
       - name: Print Title of PR
-        run: echo The Title of your PR is ${{ github.event.pull_request.title }}
+        shell: bash
+        if: ${{ !startsWith(github.event.pull_request.title, 'SGM-') }}
+        run: exit 1;
