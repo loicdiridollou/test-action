@@ -1,0 +1,15 @@
+name: Create Release with new tag
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  get_tag_value:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Title of PR
+        shell: bash
+        run: |
+          echo ${{github.ref}};
