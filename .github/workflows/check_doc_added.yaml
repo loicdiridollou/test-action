@@ -6,16 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Get Base Ref SHA
-        id: base_sha_short
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: echo "base_sha=${BASE_SHA:0:7}" >> "$GITHUB_OUTPUT"
-      - name: Get Head Ref SHA
-        id: head_sha_short
-        env:
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: echo "head_sha=${HEAD_SHA:0:7}" >> "$GITHUB_OUTPUT"
       - name: Show API results of commit diffs
         shell: python
         env:
@@ -26,7 +16,7 @@ jobs:
           import os
           import requests
           resp = requests.get(
-              f"https://api.github.com/repos/loicdiridollou/test-action/compare/5029126...11d3bf6',
+              f"https://api.github.com/repos/loicdiridollou/test-action/compare/{os.environ['BASE_SHA'][0:7]}...{os.environ['HEAD_SHA'][0:7]}",
               headers={'Authorization': f"Bearer {os.environ['GITHUB_TOKEN']}")
           dd = resp.json()
           docs_added = False
