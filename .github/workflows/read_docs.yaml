@@ -16,7 +16,7 @@ jobs:
           from pathlib import Path
 
           rgx = re.compile(r'## Version \d+\.\d+\.\d+')
-          v_major_minor = '.'.join(v.split('.')[:2])
+          v_major_minor = '.'.join(os.environ['tag'].split('.')[:2])
           body = Path(f'doc/whatsnew/v{v_major_minor}.md').read_text()
           cur_v = rgx.search(body)
           prev_v = rgx.search(body, cur_v.end())
