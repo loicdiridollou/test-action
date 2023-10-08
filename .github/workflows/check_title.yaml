@@ -1,10 +1,15 @@
 on:
   push:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, edited]
 
   print_title_of_pr:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Print Title of PR
-        run: echo The Title of your PR is ${{ github.event.pull_request.title }}
+        shell: bash
+        run: |
+          if [[ ${{ github.event.pull_request.title }} =~ SGM-[0-9]{1,4}[[:space:]].+ ]] ;
+            then exit 0;
+          else exit 1;
+          fi
