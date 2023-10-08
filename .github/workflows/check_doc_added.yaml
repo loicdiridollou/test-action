@@ -1,17 +1,25 @@
-name: Check docs were added
-
-on:
-  push:
-    branches:
-      - "*"
-      - "!main"
+name: CI
+on: push
 
 jobs:
-  check_docs:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Check SHA for base and head
-        run: |
-          echo ${{ github.event.pull_request.base.sha }};
-          echo ${{ github.event.pull_request.head.sha }};
+      - uses: actions/checkout@v1
+
+      - name: Get Branch
+        id: branch
+        run: echo "git_branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_BRANCH
+
+      - name: Check Branch
+        run: echo "${{ env.branch }}"
+
+      - name: Get Hash
+        id: hash
+        run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_HASH
+
+      - name: Check Hash
+        run: echo "${{ env.hash }}"
+
+      - name: Create docker image
+        run: ./docker-build.sh ${{ env.branch }} ${{ env.hash }}
