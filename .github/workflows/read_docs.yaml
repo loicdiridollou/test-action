@@ -15,6 +15,7 @@ jobs:
         run: |
           import os
           import re
+          import uuid
           from pathlib import Path
 
           rgx = re.compile(r'## Version \d+\.\d+\.\d+')
@@ -23,9 +24,15 @@ jobs:
           cur_v = rgx.search(body)
           prev_v = rgx.search(body, cur_v.end())
           result = body[cur_v.start() : prev_v.start()]
-          print(result)
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
-              print(f'test_report={result}', file=fh)
+
+          def set_multiline_output(name, value):
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+                  delimiter = uuid.uuid1()
+                  print(f'{name}<<{delimiter}', file=fh)
+                  print(value, file=fh)
+                  print(delimiter, file=fh)
+
+          set_multiline_output('test_report', result)
       - name: print_docs
         shell: bash
         run: echo ${{ steps.get_docs.outputs.test_report }}
