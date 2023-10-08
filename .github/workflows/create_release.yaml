@@ -12,5 +12,4 @@ jobs:
       - name: Print Title of PR
         shell: bash
         run: |
-          tag="${{ github.ref }}";
-          echo ${tag##*/};
+          echo ${github.ref##*/};
