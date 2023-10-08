@@ -12,7 +12,8 @@ jobs:
       - name: Print Title of PR
         shell: bash
         run: |
-          echo ${{ github.ref##*/ }};
+          tag = ${{ github.ref }};
+          echo ${tag##*/};
 
       - name: Create release
         shell: bash
