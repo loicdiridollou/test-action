@@ -1,4 +1,4 @@
-name: CI
+name: Check documation was added
 on: pull_request
 
 jobs:
@@ -21,6 +21,7 @@ jobs:
           dd = resp.json()
           docs_added = False
           for file in dd['files']:
+              print(file['filename'])
               if file['filename'].startswith('doc/whatsnew/'):
                 doc_added = True
           if not docs_added:
