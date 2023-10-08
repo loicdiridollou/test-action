@@ -10,7 +10,7 @@ jobs:
         shell: python
         id: get_docs
         env:
-          tag: v1.2.1
+          tag: v1.1.1
         run: |
           import os
           import re
