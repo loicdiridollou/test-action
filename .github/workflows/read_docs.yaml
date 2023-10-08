@@ -12,6 +12,7 @@ jobs:
         env:
           tag: v1.2.1
         run: |
+          import os
           import re
           from pathlib import Path
 
