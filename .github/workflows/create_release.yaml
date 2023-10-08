@@ -25,7 +25,7 @@ jobs:
             https://api.github.com/repos/loicdiridollou/test-action/releases \
             -d '{"tag_name": "${{ github.ref }}",
                  "target_commitish":"main",
-                 "name": "${{ RELEASE_VERSION }}",
+                 "name": "${{ steps.vars.outputs.tag }}",
                  "body":"Description of the release",
                  "draft": false,
                  "prerelease": false,
