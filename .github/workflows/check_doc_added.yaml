@@ -21,8 +21,9 @@ jobs:
           dd = resp.json()
           docs_added = False
           for file in dd['files']:
-              print(file['filename'])
+              print(file['filename'], file['filename'].startswith('doc'))
               if file['filename'].startswith('doc/whatsnew/'):
                 doc_added = True
+              print(doc_added)
           if not docs_added:
               raise Exception('no docs')
