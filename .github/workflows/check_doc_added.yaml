@@ -16,7 +16,8 @@ jobs:
           import os
           import requests
           url = f"https://api.github.com/repos/loicdiridollou/test-action/compare/{os.environ['BASE_SHA'][0:7]}...{os.environ['HEAD_SHA'][0:7]}"
-          resp = requests.get(url, headers={'Authorization': f"Bearer {os.environ['GITHUB_TOKEN']}")
+          authorization =f"Bearer {os.environ['GITHUB_TOKEN']}" 
+          resp = requests.get(url, headers={'Authorization': authorization)
           dd = resp.json()
           docs_added = False
           for file in dd['files']:
