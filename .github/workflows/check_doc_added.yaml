@@ -16,6 +16,9 @@ jobs:
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: echo "head_sha=${HEAD_SHA:0:7}" >> "$GITHUB_OUTPUT"
+      - name: Show URL
+        run: |
+          echo "https://api.github.com/repos/loic.diridollou/test-action/compare/${{steps.base_sha_short.github_output.bash_sha}}..${{steps.head_sha_short.github_output.head_sha}}"
       - name: Show API results of commit diffs
         run: |
           curl -L \
