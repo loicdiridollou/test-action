@@ -15,6 +15,7 @@ jobs:
         id: get_docs
         env:
           tag: v1.1.1
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           import os
           import re
@@ -33,9 +34,9 @@ jobs:
           print(os.environ)
           url = "https://api.github.com/repos/loicdiridollou/test-action/releases"
           authorization =f"Bearer {os.environ['GITHUB_TOKEN']}" 
-          data = {"tag_name": os.environ['refs'],
+          data = {"tag_name": os.environ['GITHUB_REF'],
                  "target_commitish":"main",
-                 "name": os.environ['tag'],
+                 "name": os.environ['GITHUB_REF'].split('/')[-1],
                  "body": result,
                  "draft": false,
                  "prerelease": false,
