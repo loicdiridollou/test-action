@@ -22,7 +22,8 @@ jobs:
           body = Path(f'doc/whatsnew/{v_major_minor}.md').read_text()
           cur_v = rgx.search(body)
           prev_v = rgx.search(body, cur_v.end())
-          os.environ['outputs_job'] = body[cur_v.start() : prev_v.start()]
+          results = body[cur_v.start() : prev_v.start()]
+          print(f'::set-output name=test_report::{result}')
       - name: print_docs
         shell: bash
-        run: echo ${{ env.outputs_job }}
+        run: echo ${{ steps.get_docs.outputs.test_report }}
