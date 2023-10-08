@@ -22,7 +22,7 @@ jobs:
             https://api.github.com/repos/loicdiridollou/test-action/releases \
             -d '{"tag_name": "${{ github.ref }}",
                  "target_commitish":"main",
-                 "name": ${TAG##*/},
+                 "name": "${{TAG##*/}}",
                  "body":"Description of the release",
                  "draft": false,
                  "prerelease": false,
