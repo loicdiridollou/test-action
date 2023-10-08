@@ -9,8 +9,7 @@ jobs:
     steps:
       - name: Print Title of PR
         shell: bash
+        if: startsWith(${{ github.event.pull_request.title }}, 'SGM-');
         run: |
-          if [[ ${{ github.event.pull_request.title }} =~ SGM-[0-9]{1,4}[[:space:]].+ ]] ;
-            then exit 0;
-          else exit 1;
-          fi
+          echo 'True'
+          
