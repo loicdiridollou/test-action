@@ -7,6 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Get Base Ref branch name
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          echo "${{ github.event.pull_request.head.sha }}";
-          echo "${{ github.event.pull_request.base.sha }}"
+          echo "${BASE_SHA:0:7}";
+          echo "${HEAD_SHA:0:7}";
