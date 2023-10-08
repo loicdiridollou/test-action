@@ -3,6 +3,7 @@ on: pull_request
 
 jobs:
   build:
+    name: Check documentation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,9 +22,7 @@ jobs:
           dd = resp.json()
           docs_added = False
           for file in dd['files']:
-              print(file['filename'], file['filename'].startswith('doc'))
               if file['filename'].startswith('doc/whatsnew/'):
                 docs_added = True
-              print(docs_added)
           if not docs_added:
               raise Exception('no docs')
