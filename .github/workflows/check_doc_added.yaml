@@ -23,7 +23,7 @@ jobs:
           for file in dd['files']:
               print(file['filename'], file['filename'].startswith('doc'))
               if file['filename'].startswith('doc/whatsnew/'):
-                doc_added = True
-              print(doc_added)
+                docs_added = True
+              print(docs_added)
           if not docs_added:
               raise Exception('no docs')
