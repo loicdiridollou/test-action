@@ -17,11 +17,11 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: echo "head_sha=${HEAD_SHA:0:7}" >> "$GITHUB_OUTPUT"
       - name: Show API results of commit diffs
-        env:
-          base_sha: ${{steps.base_sha_short.github_output.base_sha}}
-          head_sha: ${{steps.base_sha_short.github_output.head_sha}}
         shell: python
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           import os
           print(os.environ)
-          print(f"https://api.github.com/repos/loic.diridollou/test-action/compare/{os.environ['base_sha']}..{os.environ['head_sha']}")
+          print(f"https://api.github.com/repos/loic.diridollou/test-action/compare/{os.environ['base_sha']}...{os.environ['head_sha']}")
