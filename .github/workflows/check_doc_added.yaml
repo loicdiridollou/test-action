@@ -20,6 +20,6 @@ jobs:
         run: |
           curl -L \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer <YOUR-TOKEN>" \
+            -H "Authorization: Bearer  ${{ secrets.GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/loic.diridollou/test-action/compare/${{steps.base_sha_short.github_output.bash_sha}}..${{steps.head_sha_short.github_output.head_sha}}
