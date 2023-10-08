@@ -1,6 +1,9 @@
 name: Read docs for newly created tag
 
-on: pull_request
+on:
+  push:
+    tags:
+      - "v*"
 
 jobs:
   print_title_of_pr:
@@ -33,6 +36,22 @@ jobs:
                   print(delimiter, file=fh)
 
           set_multiline_output('test_report', result)
-      - name: print_docs
+      - name: Set output
+        id: vars
+        run: echo "tag=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+      - name: Create release
+        id: split
         shell: bash
-        run: echo ${{ steps.get_docs.outputs.test_report }}
+        run: |
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer  ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/loicdiridollou/test-action/releases \
+            -d '{"tag_name": "${{ github.ref }}",
+                 "target_commitish":"main",
+                 "name": "${{ steps.vars.outputs.tag }}",
+                 "body": "${{ steps.get_docs.outputs.test_report }}",
+                 "draft": false,
+                 "prerelease": false,
+                 "generate_release_notes": false}'
