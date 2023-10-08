@@ -23,7 +23,9 @@ jobs:
           cur_v = rgx.search(body)
           prev_v = rgx.search(body, cur_v.end())
           result = body[cur_v.start() : prev_v.start()]
-          print(f'::set-output name=test_report::{result}')
+          print(result)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+              print(f'test_report={result}', file=fh)
       - name: print_docs
         shell: bash
         run: echo ${{ steps.get_docs.outputs.test_report }}
