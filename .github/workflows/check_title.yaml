@@ -10,4 +10,5 @@ jobs:
       - name: Print Title of PR
         shell: bash
         if: startsWith(${{ github.event.pull_request.title }}, 'SGM-') != true
-        run: exit 1
+        run: echo ${{ github.event.pull_request.title }}
+          exit 1
