@@ -8,6 +8,5 @@ jobs:
     steps:
       - name: Print Title of PR
         shell: bash
-        if: startsWith(${{ github.event.pull_request.title }}, 'SGM-') != true
-        run: echo startsWith(${{ github.event.pull_request.title }}, 'SGM-') ;
-          exit 1
+        if: !startsWith(${{ github.event.pull_request.title }}, 'SGM-')
+        run: exit 1;
