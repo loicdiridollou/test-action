@@ -1,0 +1,28 @@
+name: Check documation was added
+on: pull_request
+
+jobs:
+  build:
+    name: Check documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show API results of commit diffs
+        shell: python
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          import os
+          import requests
+          url = f"https://api.github.com/repos/loicdiridollou/test-action/compare/{os.environ['BASE_SHA'][0:7]}...{os.environ['HEAD_SHA'][0:7]}"
+          authorization =f"Bearer {os.environ['GITHUB_TOKEN']}" 
+          resp = requests.get(url, headers={'Authorization': authorization})
+          dd = resp.json()
+          docs_added = False
+          for file in dd['files']:
+              if file['filename'].startswith('doc/whatsnew/'):
+                docs_added = True
+          if not docs_added:
+              raise Exception('no docs')
