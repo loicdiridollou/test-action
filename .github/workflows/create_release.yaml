@@ -9,11 +9,17 @@ jobs:
   get_tag_value:
     runs-on: ubuntu-latest
     steps:
+      - name: Set output
+        id: vars
+        run: echo "tag=${GITHUB_REF##*/}"
       - name: Create release
-        env:
-          TAG: ${{ github.ref }}
         id: split
         shell: bash
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
         run: |
           curl -L \
             -X POST \
@@ -22,7 +28,7 @@ jobs:
             https://api.github.com/repos/loicdiridollou/test-action/releases \
             -d '{"tag_name": "${{ github.ref }}",
                  "target_commitish":"main",
-                 "name": "${{TAG##*/}}",
+                 "name": "$RELEASE_VERSION",
                  "body":"Description of the release",
                  "draft": false,
                  "prerelease": false,
