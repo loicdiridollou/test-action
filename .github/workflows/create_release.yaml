@@ -9,8 +9,21 @@ jobs:
   get_tag_value:
     runs-on: ubuntu-latest
     steps:
-      - name: Split branch name
+      - name: Create release
         env:
-          BRANCH: ${{ github.ref }}
+          TAG: ${{ github.ref }}
         id: split
-        run: echo "on tag ${BRANCH##*/}"
+        shell: bash
+        run: |
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer  ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/loicdiridollou/test-action/releases \
+            -d '{"tag_name": "${TAG##*/}",
+                 "target_commitish":"main",
+                 "name": "${TAG##*/}",
+                 "body":"Description of the release",
+                 "draft": false,
+                 "prerelease": false,
+                 "generate_release_notes": false}'
