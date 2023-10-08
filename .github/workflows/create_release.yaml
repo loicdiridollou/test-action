@@ -11,15 +11,12 @@ jobs:
     steps:
       - name: Set output
         id: vars
-        run: echo "tag=${GITHUB_REF##*/}"
+        run: echo "tag=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
       - name: Create release
         id: split
         shell: bash
         env:
           RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-        run: |
-          echo $RELEASE_VERSION
-          echo ${{ steps.vars.outputs.tag }}
         run: |
           curl -L \
             -X POST \
