@@ -13,23 +13,13 @@ jobs:
         shell: bash
         run: |
           echo ${{github.ref}};
-  build:
-    name: Create Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
+
+      - name: Create release
+        shell: bash
+        run: |
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer  ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/loic.diridollou/test-action/releases \
+            -d '{"tag_name":${{ github.ref}} ,"target_commitish":"main","name":${{github.ref}},"body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
