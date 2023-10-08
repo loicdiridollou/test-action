@@ -24,3 +24,6 @@ jobs:
           prev_v = rgx.search(body, cur_v.end())
 
           print(body[cur_v.start() : prev_v.start()])
+      - name: print_docs
+        shell: bash
+        run: echo ${{ steps.get_docs.outputs.stdout }}
