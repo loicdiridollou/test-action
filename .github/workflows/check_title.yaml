@@ -10,4 +10,5 @@ jobs:
         shell: bash
         if: startsWith(${{ github.event.pull_request.title }}, 'SGM-') != true
         run: echo ${{ github.event.pull_request.title }};
+          echo startsWith(${{ github.event.pull_request.title }}, 'SGM-') ;
           exit 1
