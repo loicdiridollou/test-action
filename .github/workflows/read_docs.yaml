@@ -30,7 +30,7 @@ jobs:
 
           import requests
 
-          url "https://api.github.com/repos/loicdiridollou/test-action/releases"
+          url = "https://api.github.com/repos/loicdiridollou/test-action/releases"
           authorization =f"Bearer {os.environ['GITHUB_TOKEN']}" 
           data = {"tag_name": os.environ['GITHUB_TOKEN'],
                  "target_commitish":"main",
