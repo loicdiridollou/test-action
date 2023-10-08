@@ -22,4 +22,5 @@ jobs:
           head_sha: ${{steps.base_sha_short.github_output.head_sha}}
         shell: python
         run: |
+          import os
           print(f"https://api.github.com/repos/loic.diridollou/test-action/compare/{os.environ['base_sha']}..{os.environ['head_sha']}")
