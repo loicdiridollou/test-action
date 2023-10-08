@@ -9,7 +9,7 @@ jobs:
 
       - name: Get Branch
         id: branch
-        run: echo "git_branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_BRANCH
+        run: echo "git_branch=${GITHUB_REF#refs/heads/}" >> $BRANCH
 
       - name: Check Branch
         run: echo "${{ env.branch }}"
