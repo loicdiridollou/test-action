@@ -20,7 +20,7 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer  ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/loicdiridollou/test-action/releases \
-            -d '{"tag_name": "${TAG##*/}",
+            -d '{"tag_name": "${{ github.ref }}",
                  "target_commitish":"main",
                  "name": "${TAG##*/}",
                  "body":"Description of the release",
