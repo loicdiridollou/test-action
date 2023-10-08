@@ -23,5 +23,4 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           import os
-          print(os.environ)
-          print(f"https://api.github.com/repos/loic.diridollou/test-action/compare/{os.environ['base_sha']}...{os.environ['head_sha']}")
+          print(f"https://api.github.com/repos/loic.diridollou/test-action/compare/{os.environ['BASE_SHA'][0:7]}...{os.environ['HEAD_SHA'][0:7]}")
