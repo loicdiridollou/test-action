@@ -21,6 +21,17 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           import os
-          print(f"https://api.github.com/repos/loic.diridollou/test-action/compare/{os.environ['BASE_SHA'][0:7]}...{os.environ['HEAD_SHA'][0:7]}")
+          import requests
+          resp = requests.get(
+              f"https://api.github.com/repos/loicdiridollou/test-action/compare/5029126...11d3bf6',
+              headers={'Authorization': f"Bearer {os.environ['GITHUB_TOKEN']}")
+          dd = resp.json()
+          docs_added = False
+          for file in dd['files']:
+              if file.startswith('doc/whatsnew/'):
+                doc_added = True
+          if not docs_added:
+              raise Exception('no docs')
