@@ -1,10 +1,16 @@
+name: Experiment
 on:
   schedule:
-    - cron: "12 1 * * *"
+    - cron: "*/5 * * * *"
 
 jobs:
-  test_schedule:
+  job1:
+    name: Debug
     runs-on: ubuntu-latest
+
     steps:
-      - name: Every time
-        run: echo "This step will always run"
+      - name: Git checkout
+        uses: actions/checkout@v2
+        with: { ref: debug }
+      - name: List files
+        run: ls
