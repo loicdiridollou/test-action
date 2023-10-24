@@ -9,4 +9,4 @@ jobs:
 
     steps:
       - name: Print the input name to STDOUT
-        run: echo ${github.ref}
+        run: echo ${GITHUB_REF}
